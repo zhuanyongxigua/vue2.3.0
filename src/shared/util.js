@@ -102,6 +102,7 @@ export function remove (arr: Array<any>, item: any): Array<any> | void {
 /**
  * Check whether the object has the property.
  */
+// 之所以弄一个hasOwn，原因是调用方式hasOwnProperty。
 const hasOwnProperty = Object.prototype.hasOwnProperty
 export function hasOwn (obj: Object, key: string): boolean {
   return hasOwnProperty.call(obj, key)

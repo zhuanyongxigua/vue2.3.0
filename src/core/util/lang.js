@@ -25,6 +25,8 @@ export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
 /**
  * Parse simple path.
  */
+// 这里的path，并不是之前理解的http://www.someweb.com/home这样的路径，
+// 而是a.b.c这样的路径，是一个对象深层的值的路径。 
 const bailRE = /[^\w.$]/
 export function parsePath (path: string): any {
   if (bailRE.test(path)) {

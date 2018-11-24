@@ -189,11 +189,17 @@ export function defineReactive (
  * already exist.
  */
 export function set (target: Array<any> | Object, key: any, val: any): any {
+  // 如果需要设置的是一个数组，那么key必须是一个数字。  
   if (Array.isArray(target) && typeof key === 'number') {
+    // 如果给的数字超出了数组的长度，如果没有重置长度的话，下面使用splice增加新的值，索引就不对了。
+    // 比如[0, 1, 2]这个数组，长度为3，如果key为5，不修改长度的话调用splice(5, 1, val)，结果就是[0, 1, 2, val]。
+    // val的索引是3，而不是5。
     target.length = Math.max(target.length, key)
     target.splice(key, 1, val)
     return val
   }
+  // hasOwn方法就是hasOwnProperty，就是用call改了一下this，this就是第一个参数。
+  // 与in不同的是hasOwnProperty不检查原型链。
   if (hasOwn(target, key)) {
     target[key] = val
     return val

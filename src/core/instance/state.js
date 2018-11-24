@@ -263,6 +263,7 @@ export function stateMixin (Vue: Class<Component>) {
   // flow somehow has problems with directly declared definition object
   // when using Object.defineProperty, so we have to procedurally build up
   // the object here.
+  // 由于下面用的是defineProperty，所以这里的get和set方法实际上就是getter和setter了。
   const dataDef = {}
   dataDef.get = function () { return this._data }
   const propsDef = {}
@@ -279,6 +280,7 @@ export function stateMixin (Vue: Class<Component>) {
       warn(`$props is readonly.`, this)
     }
   }
+  // 这里用defineProperty的原因也是因为把上面的get和set方法变成getter和setter。
   Object.defineProperty(Vue.prototype, '$data', dataDef)
   Object.defineProperty(Vue.prototype, '$props', propsDef)
 
@@ -290,6 +292,7 @@ export function stateMixin (Vue: Class<Component>) {
     cb: Function,
     options?: Object
   ): Function {
+    // 这个$watch是加在原型上的，所以调用的时候this是实例。
     const vm: Component = this
     options = options || {}
     options.user = true
@@ -297,6 +300,8 @@ export function stateMixin (Vue: Class<Component>) {
     if (options.immediate) {
       cb.call(vm, watcher.value)
     }
+    // 一般情况下直接调用$watch就可以了，不过有的时候需要取消绑定，
+    // 这个时候就需要把调用$watch的返回值接住。
     return function unwatchFn () {
       watcher.teardown()
     }

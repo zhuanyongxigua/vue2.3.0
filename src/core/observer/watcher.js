@@ -69,6 +69,8 @@ export default class Watcher {
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn
     } else {
+      // 用了parsePath之后，如果没有错误的话，得到的是一个function，
+      // 调用这个function（也就是调用getter），参数是对象，就可以根据之前的路径（如a.b.c）拿到值。
       this.getter = parsePath(expOrFn)
       if (!this.getter) {
         this.getter = function () {}
