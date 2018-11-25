@@ -23,6 +23,7 @@ export function initMixin (Vue: Class<Component>) {
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       startTag = `vue-perf-init:${vm._uid}`
       endTag = `vue-perf-end:${vm._uid}`
+      // 如果在浏览器中，就是window.performance.mark方法，就是创建一个性能的时间戳。
       mark(startTag)
     }
 
@@ -54,6 +55,8 @@ export function initMixin (Vue: Class<Component>) {
     initRender(vm)
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props
+    // 这个是初始化data、props、methods
+    // 这里是绝对的重点！！！
     initState(vm)
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
@@ -88,6 +91,7 @@ function initInternalComponent (vm: Component, options: InternalComponentOptions
   }
 }
 
+// 分解构造函数选项。
 export function resolveConstructorOptions (Ctor: Class<Component>) {
   let options = Ctor.options
   if (Ctor.super) {

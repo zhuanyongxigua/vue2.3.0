@@ -219,6 +219,7 @@ function checkComponents (options: Object) {
  * Ensure all props option syntax are normalized into the
  * Object-based format.
  */
+// 就是格式化，把数组或对象变成指定格式的对象，key大写。
 function normalizeProps (options: Object) {
   const props = options.props
   if (!props) return
@@ -235,7 +236,7 @@ function normalizeProps (options: Object) {
         warn('props must be strings when using array syntax.')
       }
     }
-  } else if (isPlainObject(props)) {
+  } else if (isPlainObject(props)) {  // isPlainObject就是用toString判断是不是对象。
     for (const key in props) {
       val = props[key]
       name = camelize(key)
@@ -250,6 +251,7 @@ function normalizeProps (options: Object) {
 /**
  * Normalize raw function directives into object format.
  */
+// 这种东西都是格式话，方便以后统一处理的。
 function normalizeDirectives (options: Object) {
   const dirs = options.directives
   if (dirs) {
@@ -300,6 +302,9 @@ export function mergeOptions (
       mergeField(key)
     }
   }
+  // 这个方法的作用是合并字段；
+  // strats是策略的简写，如果有指定的，就用指定的，如果没有，就用默认的；
+  // 默认的策略就是如果第二个参数是undefined，就返回第一个，否则就返回第二个。
   function mergeField (key) {
     const strat = strats[key] || defaultStrat
     options[key] = strat(parent[key], child[key], vm, key)

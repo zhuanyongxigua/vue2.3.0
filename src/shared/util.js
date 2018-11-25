@@ -122,6 +122,7 @@ export function cached<F: Function> (fn: F): F {
 /**
  * Camelize a hyphen-delimited string.
  */
+// 把-后面的字母变大写
 const camelizeRE = /-(\w)/g
 export const camelize = cached((str: string): string => {
   return str.replace(camelizeRE, (_, c) => c ? c.toUpperCase() : '')
@@ -165,6 +166,7 @@ export function bind (fn: Function, ctx: Object): Function {
 /**
  * Convert an Array-like object to a real Array.
  */
+// 类数组转成数组。
 export function toArray (list: any, start?: number): Array<any> {
   start = start || 0
   let i = list.length - start
@@ -178,6 +180,7 @@ export function toArray (list: any, start?: number): Array<any> {
 /**
  * Mix properties into target object.
  */
+// 就是把from的可枚举复制给to
 export function extend (to: Object, _from: ?Object): Object {
   for (const key in _from) {
     to[key] = _from[key]
