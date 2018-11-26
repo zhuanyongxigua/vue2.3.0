@@ -40,6 +40,7 @@ export class Observer {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
+    // 添加__ob__属性到data，就是实例出来的那个观察者。
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       const augment = hasProto
@@ -117,6 +118,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     Object.isExtensible(value) &&
     !value._isVue
   ) {
+    // 注意上面的isVue这个属性，这里new的不是发生在data，而是data里面的一个一个的属性，也就是会有很多new Observer。
     ob = new Observer(value)
   }
   if (asRootData && ob) {

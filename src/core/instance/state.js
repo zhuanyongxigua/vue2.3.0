@@ -30,6 +30,8 @@ const sharedPropertyDefinition = {
   set: noop
 }
 
+
+// 把target中的key的value用target中的sourceKey的key的value代理。
 export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter () {
     return this[sourceKey][key]
@@ -129,6 +131,7 @@ function initData (vm: Component) {
         vm
       )
     } else if (!isReserved(keys[i])) {
+      // 为什么要代理？
       proxy(vm, `_data`, keys[i])
     }
   }
