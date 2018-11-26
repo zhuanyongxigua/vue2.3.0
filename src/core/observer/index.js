@@ -118,7 +118,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     Object.isExtensible(value) &&
     !value._isVue
   ) {
-    // 注意上面的isVue这个属性，这里new的不是发生在data，而是data里面的一个一个的属性，也就是会有很多new Observer。
+    // 这里遍历data中的属性开始增加响应式特性。里面有一个walk方法。
     ob = new Observer(value)
   }
   if (asRootData && ob) {
