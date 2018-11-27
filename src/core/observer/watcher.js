@@ -44,6 +44,11 @@ export default class Watcher {
     options?: Object
   ) {
     this.vm = vm
+    // 在initLifecycle的時候vm._watchers = null；
+    // 在initState的時候vm._watchers = []。
+    // 在挂载的时候vm._watcher = new Watcher(vm, updateComponent, noop)
+    // 然后就调用了watcher里面的get方法，进而调用pushTarget；
+    // 在调用pushTarget方法的时候把Dep.target赋值为watcher。
     vm._watchers.push(this)
     // options
     if (options) {

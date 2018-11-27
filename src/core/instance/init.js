@@ -69,6 +69,9 @@ export function initMixin (Vue: Class<Component>) {
     }
 
     if (vm.$options.el) {
+      // 这个方法是在platforms/web/runtime/index.js里面加上的；
+      // 这个方法里面调用了mountComponent方法，mountComponent方法里面会new Watcher；
+      // mountComponent方法在lifecycle.js里面定义。
       vm.$mount(vm.$options.el)
     }
   }

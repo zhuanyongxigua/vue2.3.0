@@ -136,6 +136,7 @@ export function defineReactive (
   val: any,
   customSetter?: Function
 ) {
+  // 下面的get属于闭包，所以这个实例会在内存里面。
   const dep = new Dep()
 
   const property = Object.getOwnPropertyDescriptor(obj, key)
@@ -153,7 +154,13 @@ export function defineReactive (
     configurable: true,
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
+      // 初始化的时候还没有target，挂载了之后才有的，不过setter里面会调用一次getter。
       if (Dep.target) {
+        // 这一步，会调用Watcher的addDep方法，加的是上面new出来的dep。
+        // 调用了addDep，就调用了Dep的addSub方法。这个时候塞进去的就是new出来的watcher了。
+        // 所以就是在dep里面加watcher。
+        // 看源码的时候注意depend和addDep方法里面的this，前者是dep，后者是watcher（在Dep.target里面）。
+        // 大Dep目测应该就是全局变量了，它本身也是类，不会搞一堆的，只不过现在看没有放在vue实例里面。
         dep.depend()
         if (childOb) {
           childOb.dep.depend()
