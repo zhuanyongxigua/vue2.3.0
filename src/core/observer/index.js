@@ -145,6 +145,7 @@ export function defineReactive (
   }
 
   // cater for pre-defined getter/setters
+  // 如果没有定义过setter和getter，就没有这两个东西
   const getter = property && property.get
   const setter = property && property.set
 
