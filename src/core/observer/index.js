@@ -119,6 +119,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     !value._isVue
   ) {
     // 这里遍历data中的属性开始增加响应式特性。里面有一个walk方法。
+
     ob = new Observer(value)
   }
   if (asRootData && ob) {
@@ -155,6 +156,7 @@ export function defineReactive (
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
       // 初始化的时候还没有target，挂载了之后才有的，不过setter里面会调用一次getter。
+      // 挂载之前不涉及修改DOM，所以随便改，并不影响结果，所以才会在挂载的时候new Watcher。
       if (Dep.target) {
         // 这一步，会调用Watcher的addDep方法，加的是上面new出来的dep。
         // 调用了addDep，就调用了Dep的addSub方法。这个时候塞进去的就是new出来的watcher了。

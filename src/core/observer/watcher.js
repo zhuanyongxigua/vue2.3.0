@@ -87,6 +87,7 @@ export default class Watcher {
         )
       }
     }
+    // 用computed的時候lazy就是true，不会调用get方法。
     this.value = this.lazy
       ? undefined
       : this.get()

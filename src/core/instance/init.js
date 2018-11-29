@@ -72,6 +72,7 @@ export function initMixin (Vue: Class<Component>) {
       // 这个方法是在platforms/web/runtime/index.js里面加上的；
       // 这个方法里面调用了mountComponent方法，mountComponent方法里面会new Watcher；
       // mountComponent方法在lifecycle.js里面定义。
+      // 在挂载之前没有Dep.target，所以getter和setter的大部分代码并没有起作用，因为这个时候不涉及修改DOM，所以随便改，并不影响结果，所以才会在挂载的时候new Watcher。
       vm.$mount(vm.$options.el)
     }
   }

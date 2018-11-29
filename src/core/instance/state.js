@@ -200,6 +200,7 @@ export function defineComputed (target: any, key: string, userDef: Object | Func
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
+// computed在内存里面就是因为这个。
 function createComputedGetter (key) {
   return function computedGetter () {
     const watcher = this._computedWatchers && this._computedWatchers[key]

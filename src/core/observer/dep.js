@@ -19,6 +19,7 @@ export default class Dep {
     this.subs = []
   }
 
+  // 在new Watcher的时候有调用。塞进来的也是那个Watcher。
   addSub (sub: Watcher) {
     this.subs.push(sub)
   }
@@ -29,12 +30,14 @@ export default class Dep {
 
   depend () {
     if (Dep.target) {
+      // 传进去的this是dep，addDep方法里面的this是Dep.target，也就是一个watcher。
       Dep.target.addDep(this)
     }
   }
 
   notify () {
     // stabilize the subscriber list first
+    // 算是深拷贝。
     const subs = this.subs.slice()
     for (let i = 0, l = subs.length; i < l; i++) {
       subs[i].update()
