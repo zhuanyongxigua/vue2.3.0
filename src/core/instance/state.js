@@ -108,6 +108,7 @@ function initProps (vm: Component, propsOptions: Object) {
 
 function initData (vm: Component) {
   let data = vm.$options.data
+  // 这里定义了_data
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)
     : data || {}
@@ -132,6 +133,7 @@ function initData (vm: Component) {
       )
     } else if (!isReserved(keys[i])) {
       // 为什么要代理？
+      // 这些属性在vm里面，代理到了_data里面。
       proxy(vm, `_data`, keys[i])
     }
   }
