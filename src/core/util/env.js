@@ -9,6 +9,7 @@ export const hasProto = '__proto__' in {}
 
 // Browser environment sniffing
 export const inBrowser = typeof window !== 'undefined'
+// 识别各种平台的方法
 export const UA = inBrowser && window.navigator.userAgent.toLowerCase()
 export const isIE = UA && /msie|trident/.test(UA)
 export const isIE9 = UA && UA.indexOf('msie 9.0') > 0
