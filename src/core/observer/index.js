@@ -109,6 +109,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     return
   }
   let ob: Observer | void
+  // 这里也是一个关键，如果发现这个对象已经定义了观察者了，那就不要继续了，就用这个就可以了，下一个watcher直接放到这个里面就可以了。
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
   } else if (

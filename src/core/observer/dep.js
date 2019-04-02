@@ -16,6 +16,7 @@ export default class Dep {
 
   constructor () {
     this.id = uid++
+    // 这个地方很恶心，如果没有这个赋值空数组的话，在下次new的时候这个subs还可能是有东西的，所以还是没有搞清楚是如何同时通知两个视图的。
     this.subs = []
   }
 
@@ -28,6 +29,7 @@ export default class Dep {
     remove(this.subs, sub)
   }
 
+  // 这个东西，谁调，就把当前Dep.target发给谁
   depend () {
     if (Dep.target) {
       // 传进去的this是dep，addDep方法里面的this是Dep.target，也就是一个watcher。
